@@ -1,6 +1,6 @@
 import requests
 from datetime import datetime
-import RFClassifier
+from . import RFClassifier
 
 
 class CropPredictor:
@@ -95,15 +95,16 @@ class CropPredictor:
             "rainfall": weather_dict["rainfall"],
         }
 
-    def predict(self, lat, long, useNPK=True):
+    def get_all_data(self, lat, long):
         soil_dict = self.get_soil_data(lat, long)
         weather_dict = self.get_weather_data(lat, long)
 
-        # Model expects the dict to be ordered
-        data = self.get_ordered_soil_and_weather_data(soil_dict, weather_dict)
+        return self.get_ordered_soil_and_weather_data(soil_dict, weather_dict)
+
+    def predict(self, data, useNPK=True):
         # print(data)
         return self.classifier.get_prediction_probabilities(data, useNPK=useNPK)
 
 
-cp = CropPredictor()
-print(cp.predict(33.155207, 35.302975, useNPK=False))
+# cp = CropPredictor()
+# print(cp.predict(cp.get_all_data(35.113234, 34.212334), useNPK=True))

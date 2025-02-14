@@ -22,20 +22,11 @@ class RFModel:
             predictions = classifier_no_NPK.predict_proba(
                 pd.DataFrame(data, index=[0])
             )[0]
-        zipped_predictions = list(zip(predictions.tolist(), labels))
-        zipped_predictions.sort(reverse=True)
+
+        zipped_list = list(zip(predictions.tolist(), labels))
+        zipped_list.sort(reverse=True)
+        zipped_predictions = list(
+            {"probability": probability, "crop_name": crop_name}
+            for probability, crop_name in zipped_list
+        )
         return zipped_predictions
-
-
-# test_data = {
-#     "N": 90,
-#     "P": 40,
-#     "K": 32,
-#     "temperature": 24,
-#     "humidity": 82.03,
-#     "ph": 7.2,
-#     "rainfall": 200,
-# }
-# p = Predictor()
-# prediction = p.predict(test_data)
-# print(prediction)
