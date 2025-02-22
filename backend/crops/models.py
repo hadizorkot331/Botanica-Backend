@@ -39,8 +39,8 @@ Sunlight: {self.sunlight}
 """
 
 class UserPlants(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    crop = models.ForeignKey(Crop, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    crop_id = models.ForeignKey(Crop, on_delete=models.CASCADE)
     time_planted = models.DateTimeField(auto_now_add=True)
     last_watered = models.DateTimeField(auto_now=True)
     prediction_probability = models.FloatField()
@@ -53,9 +53,9 @@ class UserPlants(models.Model):
         if self.last_watered > datetime.now():
             raise ValidationError("Plant cannot be watered in the future")
 
-        if not self.crop:
+        if not self.crop_id:
             raise ValidationError("Crop does not exist")
-        if not self.user:
+        if not self.user_id:
             raise ValidationError("User does not exist")
 
         return super().clean()
