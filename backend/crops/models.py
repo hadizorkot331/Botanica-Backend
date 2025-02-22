@@ -4,6 +4,9 @@ from rest_framework.exceptions import ValidationError
 
 from datetime import datetime
 
+from sklearn.gaussian_process.kernels import Product
+
+
 # Create your models here.
 
 class Crop(models.Model):
@@ -49,6 +52,12 @@ class UserPlants(models.Model):
             raise ValidationError("Plant cannot be watered before planting time")
         if self.last_watered > datetime.now():
             raise ValidationError("Plant cannot be watered in the future")
+
+        if not self.crop:
+            raise ValidationError("Crop does not exist")
+        if not self.user:
+            raise ValidationError("User does not exist")
+
         return super().clean()
 
     def __str__(self):
