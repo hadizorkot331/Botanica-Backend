@@ -1,5 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
+from rest_framework.exceptions import ValidationError
+
+from datetime import datetime
 
 # Create your models here.
 
@@ -40,6 +43,13 @@ class UserPlants(models.Model):
     prediction_probability = models.FloatField()
     long = models.DecimalField()
     lat = models.DecimalField()
+
+    def clean(self):
+        if self.last_watered < self.time_planted:
+            raise ValidationError("Plant cannot be watered before planting time")
+        if self.last_watered > datetime.now():
+            raise ValidationError("Plant cannot be watered in the future")
+        return super().clean()
 
     def __str__(self):
         return f"""User: {self.user.username}
