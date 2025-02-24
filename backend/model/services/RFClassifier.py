@@ -1,10 +1,12 @@
 import pandas as pd
 import joblib
+from pathlib import Path
 
+script_dir = Path(__file__).resolve().parent
 
-pickle_data = joblib.load(
-    "/Users/hadizorkot/Documents/AUB/Sem 4/CMPS 271/Botanica/backend/model/services/Crop_RandomForest_Classifier_V1.pkl"
-)
+pickle_path = script_dir / 'Crop_RandomForest_Classifier_V1.pkl'
+
+pickle_data = joblib.load(pickle_path)
 
 labels = pickle_data["numbers_to_labels"].values()
 classifier = pickle_data["model"]
