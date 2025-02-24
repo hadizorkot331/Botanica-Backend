@@ -24,12 +24,13 @@ class Crop(models.Model):
     sunlight = models.CharField(null=True, max_length=200)
 
     def __str__(self):
-        return f"""Name: {self.name}
-Yield: {self._yield}
+        return f"""
+Name: {self.name}
+Yield: {self.crop_yield} Kg/m^2
 Indoor: {self.indoor}
 Cycle: {self.cycle}
 Watering: {self.watering}
-Watering Avg Volume Requirement: {self.watering_avg_volume_requirement} L
+Watering Avg Volume Requirement: {self.watering_avg_volume_requirement} L/m^2
 Pruning Month: {self.pruning_month}
 Growth Rate: {self.growth_rate}
 Min. Hardiness: {self.min_hardiness}
@@ -44,7 +45,7 @@ class UserPlants(models.Model):
     time_planted = models.DateTimeField(auto_now_add=True)
     last_watered = models.DateTimeField(auto_now=True)
     prediction_probability = models.FloatField()
-    long = models.DecimalField(max_digits=100, decimal_places=10)
+    lon = models.DecimalField(max_digits=100, decimal_places=10)
     lat = models.DecimalField(max_digits=100, decimal_places=10)
 
     def clean(self):
@@ -61,8 +62,9 @@ class UserPlants(models.Model):
         return super().clean()
 
     def __str__(self):
-        return f"""User: {self.user.username}
-Crop: {self.crop.name}
+        return f"""
+User: {self.user_id.username}
+Crop: {self.crop_id.name}
 Prediction: {self.prediction_probability}
 Time Planted: {self.time_planted}
 Location: Longitude: {self.lat}, Latitude: {self.lat}
