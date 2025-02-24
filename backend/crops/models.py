@@ -10,19 +10,18 @@ from sklearn.gaussian_process.kernels import Product
 # Create your models here.
 
 class Crop(models.Model):
-    api_id = models.IntegerField()
-    name = models.CharField()
-    _yield = models.DecimalField(decimal_places=2)
+    name = models.CharField(max_length=200)
+    crop_yield = models.DecimalField(decimal_places=2, max_digits=100)
     indoor = models.BooleanField(null=True)
-    cycle = models.CharField()
-    watering = models.CharField()
+    cycle = models.CharField(max_length=200)
+    watering = models.CharField(max_length=200)
     watering_avg_volume_requirement = models.IntegerField(null=True)
-    pruning_month = models.CharField(null=True)
-    growth_rate = models.CharField(null=True)
+    pruning_month = models.CharField(null=True, max_length=200)
+    growth_rate = models.CharField(null=True, max_length=200)
     min_hardiness = models.IntegerField(null=True)
     max_hardiness = models.IntegerField(null=True)
-    image_url = models.CharField(null=True)
-    sunlight = models.CharField(null=True)
+    image_url = models.URLField(null=True)
+    sunlight = models.CharField(null=True, max_length=200)
 
     def __str__(self):
         return f"""Name: {self.name}
@@ -38,14 +37,15 @@ Max. Hardiness: {self.max_hardiness}
 Sunlight: {self.sunlight}
 """
 
+
 class UserPlants(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     crop_id = models.ForeignKey(Crop, on_delete=models.CASCADE)
     time_planted = models.DateTimeField(auto_now_add=True)
     last_watered = models.DateTimeField(auto_now=True)
     prediction_probability = models.FloatField()
-    long = models.DecimalField()
-    lat = models.DecimalField()
+    long = models.DecimalField(max_digits=100, decimal_places=10)
+    lat = models.DecimalField(max_digits=100, decimal_places=10)
 
     def clean(self):
         if self.last_watered < self.time_planted:
