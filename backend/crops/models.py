@@ -1,13 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
 from rest_framework.exceptions import ValidationError
-
 from datetime import datetime
-
-from sklearn.gaussian_process.kernels import Product
 
 
 # Create your models here.
+
 
 class Crop(models.Model):
     name = models.CharField(max_length=200)
@@ -25,18 +23,18 @@ class Crop(models.Model):
 
     def __str__(self):
         return f"""
-Name: {self.name}
-Yield: {self.crop_yield} Kg/m^2
-Indoor: {self.indoor}
-Cycle: {self.cycle}
-Watering: {self.watering}
-Watering Avg Volume Requirement: {self.watering_avg_volume_requirement} L/m^2
-Pruning Month: {self.pruning_month}
-Growth Rate: {self.growth_rate}
-Min. Hardiness: {self.min_hardiness}
-Max. Hardiness: {self.max_hardiness}
-Sunlight: {self.sunlight}
-"""
+            Name: {self.name}
+            Yield: {self.crop_yield} Kg/m^2
+            Indoor: {self.indoor}
+            Cycle: {self.cycle}
+            Watering: {self.watering}
+            Watering Avg Volume Requirement: {self.watering_avg_volume_requirement} L/m^2
+            Pruning Month: {self.pruning_month}
+            Growth Rate: {self.growth_rate}
+            Min. Hardiness: {self.min_hardiness}
+            Max. Hardiness: {self.max_hardiness}
+            Sunlight: {self.sunlight}
+            """
 
 
 class UserPlants(models.Model):
@@ -63,10 +61,10 @@ class UserPlants(models.Model):
 
     def __str__(self):
         return f"""
-User: {self.user_id.username}
-Crop: {self.crop_id.name}
-Prediction: {self.prediction_probability}
-Time Planted: {self.time_planted}
-Location: Longitude: {self.lat}, Latitude: {self.lat}
-Last Watered: {self.last_watered}
-"""
+            User: {self.user_id.username}
+            Crop: {self.crop_id.name}
+            Prediction: {self.prediction_probability}
+            Time Planted: {self.time_planted}
+            Location: Longitude: {self.lat}, Latitude: {self.lat}
+            Last Watered: {self.last_watered}
+            """
