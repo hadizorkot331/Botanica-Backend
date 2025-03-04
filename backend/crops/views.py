@@ -15,10 +15,10 @@ class UserPlantsListCreateAPIView(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        return UserPlants.objects.filter(user=self.request.user)
+        return UserPlants.objects.filter(user_id=self.request.user)
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        serializer.save(user_id=self.request.user)
 
 
 user_plants_list_create_view = UserPlantsListCreateAPIView.as_view()
@@ -31,7 +31,7 @@ class UserPlantsDetailAPIView(generics.RetrieveAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        return UserPlants.objects.filter(user=self.request.user)
+        return UserPlants.objects.filter(user_id=self.request.user)
 
     def get_object(self):
         qs = self.get_queryset()
@@ -51,7 +51,7 @@ class UserPlantsUpdateAPIView(generics.UpdateAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        return UserPlants.objects.filter(user=self.request.user)
+        return UserPlants.objects.filter(user_id=self.request.user)
 
     def get_object(self):
         qs = self.get_queryset()
@@ -61,9 +61,9 @@ class UserPlantsUpdateAPIView(generics.UpdateAPIView):
         return obj
 
     def perform_update(self, serializer):
-        if serializer.instance.user != self.request.user:
+        if serializer.instance.user_id != self.request.user:
             raise PermissionDenied("You don't have access to this plant")
-        serializer.save(user=self.request.user)
+        serializer.save(user_id=self.request.user)
 
 
 user_plants_update_view = UserPlantsUpdateAPIView.as_view()
@@ -76,7 +76,7 @@ class UserPlantsDeleteAPIView(generics.DestroyAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        return UserPlants.objects.filter(user=self.request.user)
+        return UserPlants.objects.filter(user_id=self.request.user)
 
     def get_object(self):
         qs = self.get_queryset()
@@ -86,7 +86,7 @@ class UserPlantsDeleteAPIView(generics.DestroyAPIView):
         return obj
 
     def perform_destroy(self, instance):
-        if instance.user != self.request.user:
+        if instance.user_id != self.request.user:
             raise PermissionDenied("You don't have access to this plant")
 
         super().perform_destroy(instance)
