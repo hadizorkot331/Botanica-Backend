@@ -18,13 +18,17 @@ class CropSerializer(serializers.ModelSerializer):
 
 
 class UserPlantsSerializer(serializers.ModelSerializer):
-    user = UserSerializer(source='user_id', read_only=True)
-    crop = CropSerializer(source='crop_id', read_only=True)
+    user = UserSerializer(source="user_id", read_only=True)
+    crop = CropSerializer(source="crop_id", read_only=True)
 
     class Meta:
         model = UserPlants
+
         fields = [
+            'id',
+            'user_id',
             'user',
+            'crop_id',
             'crop',
             'time_planted',
             'last_watered',
@@ -32,4 +36,5 @@ class UserPlantsSerializer(serializers.ModelSerializer):
             'lon',
             'lat',
         ]
+
         read_only_fields = ['time_planted']
