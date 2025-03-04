@@ -11,7 +11,7 @@ from .serializers import UserPlantsSerializer
 class UserPlantsListCreateAPIView(generics.ListCreateAPIView):
     serializer_class = UserPlantsSerializer
 
-    authentication_classes = [authentication.SessionAuthentication, authentication.TokenAuthentication]
+    # authentication_classes = [authentication.SessionAuthentication, authentication.TokenAuthentication]
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
@@ -27,7 +27,7 @@ user_plants_list_create_view = UserPlantsListCreateAPIView.as_view()
 class UserPlantsDetailAPIView(generics.RetrieveAPIView):
     serializer_class = UserPlantsSerializer
 
-    authentication_classes = [authentication.SessionAuthentication, authentication.TokenAuthentication]
+    # authentication_classes = [authentication.SessionAuthentication, authentication.TokenAuthentication]
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
@@ -35,7 +35,7 @@ class UserPlantsDetailAPIView(generics.RetrieveAPIView):
 
     def get_object(self):
         qs = self.get_queryset()
-        obj = qs.filter(pk=self.kwargs['pk']).first()
+        obj = qs.filter(pk=self.kwargs["pk"]).first()
         if not obj:
             raise Http404("Crop not found")
         return obj
@@ -47,7 +47,7 @@ user_plants_detail_view = UserPlantsDetailAPIView.as_view()
 class UserPlantsUpdateAPIView(generics.UpdateAPIView):
     serializer_class = UserPlantsSerializer
 
-    authentication_classes = [authentication.SessionAuthentication, authentication.TokenAuthentication]
+    # authentication_classes = [authentication.SessionAuthentication, authentication.TokenAuthentication]
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
@@ -55,7 +55,7 @@ class UserPlantsUpdateAPIView(generics.UpdateAPIView):
 
     def get_object(self):
         qs = self.get_queryset()
-        obj = qs.filter(pk=self.kwargs['pk']).first()
+        obj = qs.filter(pk=self.kwargs["pk"]).first()
         if not obj:
             raise Http404("Crop not found")
         return obj
@@ -72,7 +72,7 @@ user_plants_update_view = UserPlantsUpdateAPIView.as_view()
 class UserPlantsDeleteAPIView(generics.DestroyAPIView):
     serializer_class = UserPlantsSerializer
 
-    authentication_classes = [authentication.SessionAuthentication, authentication.TokenAuthentication]
+    # authentication_classes = [authentication.SessionAuthentication, authentication.TokenAuthentication]
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
@@ -80,7 +80,7 @@ class UserPlantsDeleteAPIView(generics.DestroyAPIView):
 
     def get_object(self):
         qs = self.get_queryset()
-        obj = qs.filter(pk=self.kwargs['pk']).first()
+        obj = qs.filter(pk=self.kwargs["pk"]).first()
         if not obj:
             raise Http404("Crop not found")
         return obj

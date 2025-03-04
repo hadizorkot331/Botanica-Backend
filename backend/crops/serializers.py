@@ -8,7 +8,7 @@ from crops.models import Crop, UserPlants
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['username']
+        fields = ["username"]
 
 
 class CropSerializer(serializers.ModelSerializer):
@@ -25,16 +25,16 @@ class UserPlantsSerializer(serializers.ModelSerializer):
         model = UserPlants
 
         fields = [
-            'id',
-            'user_id',
-            'user',
-            'crop_id',
-            'crop',
-            'time_planted',
-            'last_watered',
-            'prediction_probability',
-            'lon',
-            'lat',
+            "id",
+            "user_id",
+            "user",
+            "crop_id",
+            "crop",
+            "time_planted",
+            "last_watered",
+            "prediction_probability",
+            "lon",
+            "lat",
         ]
 
-        read_only_fields = ['time_planted']
+        read_only_fields = ["time_planted", "user", "user_id"]
