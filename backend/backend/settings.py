@@ -134,7 +134,6 @@ REST_FRAMEWORK = {
     )
 }
 
-CORS_URLS_REGEX = r"^/api/.*$"
 
 CORS_ALLOW_METHODS = (
     "DELETE",
@@ -154,10 +153,12 @@ CORS_ALLOW_HEADERS = (
     "x-requested-with",
 )
 
-CORS_ALLOWED_ORIGINS = [
-    "http://127.0.0.1:5137",
-    "https://127.0.0.1:5137",
-]
+# CORS_ALLOWED_ORIGINS = [
+#     "http://127.0.0.1:5137",
+#     "https://127.0.0.1:5137",
+# ]
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
