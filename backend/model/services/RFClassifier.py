@@ -4,7 +4,7 @@ from pathlib import Path
 
 script_dir = Path(__file__).resolve().parent
 
-pickle_path = script_dir / 'Crop_RandomForest_Classifier_V1.pkl'
+pickle_path = script_dir / "Crop_RandomForest_Classifier_V1.pkl"
 
 pickle_data = joblib.load(pickle_path)
 
@@ -25,10 +25,12 @@ class RFModel:
                 pd.DataFrame(data, index=[0])
             )[0]
 
+        max_proba = max(predictions.tolist())
+
         zipped_list = list(zip(predictions.tolist(), labels))
         zipped_list.sort(reverse=True)
         zipped_predictions = list(
-            {"probability": probability, "crop_name": crop_name}
+            {"probability": (probability / max_proba) * 100, "crop_name": crop_name}
             for probability, crop_name in zipped_list
         )
         return zipped_predictions
