@@ -2,6 +2,8 @@ from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
 from .services.crop_predictor import CropPredictor
+from crops.models import Crop
+from crops.serializers import CropSerializer
 
 
 # Create your views here.
@@ -51,9 +53,17 @@ class GetDataAPIView(APIView):
             )
         except:
             return Response(
-                "Something went wrong/Missing Data",
+                "Something went wrong/Missing Data/Soil or Weather API Down",
                 status=status.HTTP_400_BAD_REQUEST,
             )
+
+        # At this point Predictions is a list of dictionaries in the form [ {probability:int, name:string} ]
+
+        for i in range(len(predictions)):
+            name = predictions[i]["crop_name"]
+            name = name.replace(" ", "")
+            crop = Crop.objects.get(name__iexact=name)
+            predictions[i]["crop"] = CropSerializer(crop).data
 
         return Response(
             {"feature_data": feature_data, "predictions": predictions},
