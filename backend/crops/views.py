@@ -5,7 +5,12 @@ from rest_framework.exceptions import PermissionDenied
 # Create your views here.
 
 from .models import UserPlants
-from .serializers import UserPlantsSerializer
+from .serializers import UserPlantsSerializer, CropSerializer
+
+
+class CropsListAPIView(generics.ListAPIView):
+    serializer_class = CropSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
 
 class UserPlantsListCreateAPIView(generics.ListCreateAPIView):
