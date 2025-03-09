@@ -6,9 +6,10 @@ from rest_framework.exceptions import PermissionDenied
 
 from .models import UserPlants
 from .serializers import UserPlantsSerializer, CropSerializer
-
+from .models import Crop
 
 class CropsListAPIView(generics.ListAPIView):
+    queryset = Crop.objects.all()
     serializer_class = CropSerializer
     permission_classes = [permissions.IsAuthenticated]
 
