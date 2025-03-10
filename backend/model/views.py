@@ -10,7 +10,8 @@ from crops.serializers import CropSerializer
 class GetDataAPIView(APIView):
     cp = CropPredictor()
 
-    def get(self, request, *args, **kwargs):
+    # Should be a post methods so that axios can send data to it
+    def post(self, request, *args, **kwargs):
         """
         API view that handles getting the prediction and data based on location, and useNPK flag
         View can also accept "data" dictionary if user decides to modify it
