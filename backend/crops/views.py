@@ -9,7 +9,7 @@ from .serializers import UserPlantsSerializer, CropSerializer
 from .models import Crop
 
 class CropsListAPIView(generics.ListAPIView):
-    queryset = Crop.objects.all()
+    queryset = Crop.objects.order_by('name') # sort crops by name for convenience
     serializer_class = CropSerializer
     permission_classes = [permissions.IsAuthenticated]
 
