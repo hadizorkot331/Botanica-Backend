@@ -70,3 +70,38 @@ class GetDataAPIView(APIView):
             {"feature_data": feature_data, "predictions": predictions},
             status=status.HTTP_200_OK,
         )
+
+
+class GetSoilDataAPIView(APIView):
+    cp = CropPredictor()
+
+    """
+    View to get soil data for a specific location
+
+    @param lat: latitude
+    @param long: longitude
+
+    returns dict of form {N: float, P: float, K: float: ph: float}
+    """
+
+    def post(self, request, *args, **kwargs):
+        try:
+            lat = request.data.get("lat")
+            long = request.data.get("long")
+        except KeyError:
+            return Response("Incomplete Data", status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            # If data was included in request, use it
+            soil_data = self.cp.get_soil_data(lat, long)
+            return Response(soil_data, status=status.HTTP_200_OK)
+        except TypeError:
+            return Response(
+                "No Soil / Weather Data OR Bad Data found for this location",
+                status=status.HTTP_404_NOT_FOUND,
+            )
+        except:
+            return Response(
+                "Something went wrong/Missing Data/Soil or Weather API Down",
+                status=status.HTTP_400_BAD_REQUEST,
+            )
